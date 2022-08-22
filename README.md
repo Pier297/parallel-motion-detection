@@ -20,6 +20,12 @@ CONV takes [5437, 5408, 5378, 5457] microseconds, avg = 5420 microseconds
 
 On avg we spend 32% of the time in Read that is not parallizable, thus the max speedup is 1/0.32 = 3.2x.
 
+Remote machine:
+
+Read: 5415
+Read + BW: 10474
+Read + BW + Conv: 31929
+
 
 ## Maximum Theoretical Speedup
 

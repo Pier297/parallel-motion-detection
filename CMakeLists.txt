@@ -15,3 +15,11 @@ target_link_libraries( BlackWhite ${OpenCV_LIBS} )
 add_executable( Conv experiments/Conv.cpp )
 target_compile_options( Conv PRIVATE -O3 -Wall )
 target_link_libraries( Conv ${OpenCV_LIBS} )
+
+add_executable( Sequential src/Sequential.cpp )
+target_compile_options( Sequential PRIVATE -O3 -Wall )
+target_link_libraries( Sequential ${OpenCV_LIBS} )
+
+add_executable( Thread src/Thread.cpp )
+target_compile_options( Thread PRIVATE -O3 -Wall )
+target_link_libraries( Thread ${OpenCV_LIBS} pthread )

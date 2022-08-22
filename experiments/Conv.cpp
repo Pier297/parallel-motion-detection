@@ -6,8 +6,7 @@
 using namespace std;
 using namespace cv;
 
-vector<float> black_and_white(Mat frame)
-{
+vector<float> black_and_white(Mat frame) {
     // Loop over the pixels and take the RGB values of each pixel and compute the average.
     // Then set the pixel to the average.
     vector<float> bw_frame(frame.rows * frame.cols);

@@ -1,5 +1,7 @@
-/workspaces/parallel-motion-detection/CMakeFiles/FrameTa.dir
-/workspaces/parallel-motion-detection/CMakeFiles/BlackWhite.dir
-/workspaces/parallel-motion-detection/CMakeFiles/Conv.dir
-/workspaces/parallel-motion-detection/CMakeFiles/edit_cache.dir
-/workspaces/parallel-motion-detection/CMakeFiles/rebuild_cache.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/edit_cache.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/Thread.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/rebuild_cache.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/Conv.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/BlackWhite.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/Sequential.dir
+/home/p.tarasco/parallel-motion-detection/CMakeFiles/FrameTa.dir
