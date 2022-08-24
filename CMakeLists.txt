@@ -17,7 +17,7 @@ target_compile_options( Conv PRIVATE -O3 -Wall )
 target_link_libraries( Conv ${OpenCV_LIBS} )
 
 add_executable( Sequential src/Sequential.cpp )
-target_compile_options( Sequential PRIVATE -O3 -Wall )
+target_compile_options( Sequential PRIVATE -O3 -Wall -fopt-info-vec-missed )
 target_link_libraries( Sequential ${OpenCV_LIBS} )
 
 add_executable( Thread src/Thread.cpp )
