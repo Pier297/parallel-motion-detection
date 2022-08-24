@@ -1,0 +1,1 @@
+we can hide the costs of creating the threads by doing in parallel the processing of the first background frame.
