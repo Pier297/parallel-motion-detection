@@ -4,7 +4,7 @@
 using namespace std;
 using namespace cv;
 
-vector<vector<short int>> black_and_white(Mat frame)
+vector<vector<short int>> black_and_white(const Mat frame)
 {
     int rows = frame.rows;
     int cols = frame.cols;
@@ -22,7 +22,7 @@ vector<vector<short int>> black_and_white(Mat frame)
     return bw_frame;
 }
 
-vector<vector<short int>> conv(vector<vector<short int>> frame)
+vector<vector<short int>> conv(const vector<vector<short int>> frame)
 {
     // note: frame is already zero padded.
     int rows = frame.size();
@@ -47,7 +47,7 @@ vector<vector<short int>> conv(vector<vector<short int>> frame)
     return blurred_frame;
 }
 
-bool has_motion(Mat frame, vector<vector<short int>> background, double k)
+bool has_motion(const Mat frame, const vector<vector<short int>> background, const double k)
 {
     int rows = frame.rows;
     int cols = frame.cols;
