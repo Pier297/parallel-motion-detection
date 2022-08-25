@@ -48,5 +48,7 @@ int main(int argc, char **argv)
     cout << "Number of frames (minus background): " << numberOfFrames - 1 << endl;
     cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
     cout << "Total time in seconds: " << interarrival_time.count() / 1000000.0 << endl;
+    
+    cap.release();
     return 0;
 }
