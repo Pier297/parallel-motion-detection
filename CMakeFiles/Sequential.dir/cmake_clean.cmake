@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Sequential.dir/src/Sequential.cpp.o"
+  "CMakeFiles/Sequential.dir/src/Sequential.cpp.o.d"
   "bin/Sequential"
   "bin/Sequential.pdb"
 )

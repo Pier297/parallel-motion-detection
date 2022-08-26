@@ -1,5 +1,6 @@
 #include "Utimer.cpp"
 #include "Sequential.cpp"
+#include "Thread.cpp"
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -36,7 +37,13 @@ int main(int argc, char **argv)
         ks[i] = atof(argv[4 + i * 3]);
         res[i] = atoi(argv[5 + i * 3]);
     }
+    // check if output directory exists
+    if (!std::filesystem::exists(output_path))
+    {
+        std::filesystem::create_directories(output_path);
+    }
 
+    // Sequential benchmark
     long long times[numberOfVideos][n];
     for (int i = 0; i < numberOfVideos; i++)
     {
@@ -58,11 +65,6 @@ int main(int argc, char **argv)
     }
 
     ofstream sequentialFile;
-    // check if output directory exists
-    if (!std::filesystem::exists(output_path))
-    {
-        std::filesystem::create_directories(output_path);
-    }
     sequentialFile.open(output_path + "/sequential.csv");
     sequentialFile << "video_path,k,res,microseconds" << endl;
     for (int i = 0; i < numberOfVideos; i++)
@@ -81,6 +83,54 @@ int main(int argc, char **argv)
         }
     }
     sequentialFile.close();
+
+    
+    // Thread benchmark
+    int numberOfThreads = std::thread::hardware_concurrency() + 2;
+    long long timesThread[numberOfVideos][numberOfThreads][n];
+    for (int i = 0; i < numberOfVideos; i++)
+    {
+        for (int j = 1; j <= numberOfThreads; j++)
+        {
+            for (int k = 0; k < n; k++)
+            {
+                long time;
+                int computedRes;
+                {
+                    utimer compute_time("Thread", &time);
+                    computedRes = runThread(video_paths[i], ks[i], j);
+                }
+                if (computedRes != res[i])
+                {
+                    cout << "Error: result of video " << video_paths[i] << " is " << computedRes << " but should be " << res[i] << endl;
+                    return -1;
+                }
+                timesThread[i][j][k] = time;
+            }
+        }
+    }
+
+    ofstream threadFile;
+    threadFile.open(output_path + "/thread.csv");
+    threadFile << "video_path,k,res,threads,microseconds" << endl;
+    for (int i = 0; i < numberOfVideos; i++)
+    {
+        for (int j = 1; j <= numberOfThreads; j++)
+        {
+            threadFile << video_paths[i] << "," << ks[i] << "," << res[i] << "," << j << ",";
+            for (int k = 0; k < n; k++)
+            {
+                if (k + 1 == n)
+                {
+                    threadFile << timesThread[i][j][k] << endl;
+                }
+                else
+                {
+                    threadFile << timesThread[i][j][k] << "|";
+                }
+            }
+        }
+    }
 
     return 0;
 }

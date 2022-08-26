@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Conv.dir/experiments/Conv.cpp.o"
+  "CMakeFiles/Conv.dir/experiments/Conv.cpp.o.d"
   "bin/Conv"
   "bin/Conv.pdb"
 )

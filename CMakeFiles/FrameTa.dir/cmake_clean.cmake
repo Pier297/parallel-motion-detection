@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/FrameTa.dir/experiments/FrameTa.cpp.o"
+  "CMakeFiles/FrameTa.dir/experiments/FrameTa.cpp.o.d"
   "bin/FrameTa"
   "bin/FrameTa.pdb"
 )

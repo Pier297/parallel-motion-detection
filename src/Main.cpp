@@ -1,4 +1,5 @@
 #include "Sequential.cpp"
+#include "Thread.cpp"
 
 using namespace std;
 
@@ -29,19 +30,19 @@ int main(int argc, char **argv)
         int numberOfFramesWithMotion = runSequential(video_path, k);
         cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
     }
-    // else if (argv[1] == string("-t"))
-    // {
-    //     if (argc != 5)
-    //     {
-    //         cout << "Usage: " << argv[0] << " -t <video_path> <k> <num_threads>" << endl;
-    //         return -1;
-    //     }
-    //     string video_path = argv[2];
-    //     double k = atof(argv[3]);
-    //     int num_threads = atoi(argv[4]);
-    //     int numberOfFramesWithMotion = runThread(video_path, k, num_threads);
-    //     cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
-    // }
+    else if (argv[1] == string("-t"))
+    {
+        if (argc != 5)
+        {
+            cout << "Usage: " << argv[0] << " -t <video_path> <k> <num_threads>" << endl;
+            return -1;
+        }
+        string video_path = argv[2];
+        double k = atof(argv[3]);
+        int num_threads = atoi(argv[4]);
+        int numberOfFramesWithMotion = runThread(video_path, k, num_threads);
+        cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
+    }
     // else if (argv[1] == string("-f"))
     // {
     //     if (argc != 5)

@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <math.h>
 #include <opencv2/opencv.hpp>

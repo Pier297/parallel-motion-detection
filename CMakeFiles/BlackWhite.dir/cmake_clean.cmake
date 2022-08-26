@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/BlackWhite.dir/experiments/BlackWhite.cpp.o"
+  "CMakeFiles/BlackWhite.dir/experiments/BlackWhite.cpp.o.d"
   "bin/BlackWhite"
   "bin/BlackWhite.pdb"
 )

@@ -3,6 +3,9 @@
         "chrono": "cpp",
         "algorithm": "cpp",
         "vector": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp"
     }
 }
