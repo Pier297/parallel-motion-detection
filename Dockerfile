@@ -40,6 +40,12 @@ RUN apt install -y apt-utils
 RUN apt install -y g++-11
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
 RUN apt-get -y install python3-pip
+# install jupyter notebook
+RUN pip3 install jupyter
+# install pandas
+RUN pip3 install pandas
+# install matplotlib
+RUN pip3 install matplotlib
 ### fix user
 RUN useradd -ms /bin/bash spm2021user
 RUN mkdir -p /home/spm2021user/hostdir
