@@ -1,14 +1,15 @@
 #include <vector>
+#include <math.h>
 #include <opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
 
-vector<vector<short int>> black_and_white(const Mat frame)
+vector<vector<short int>> black_and_white(const Mat & frame)
 {
     int rows = frame.rows;
     int cols = frame.cols;
-    // note: we already zero pad the frame so that in the conv we can omit the conditional
+    // note: we already zero pad the frame so that in the conv we can omit the OOB checks
     vector<vector<short int>> bw_frame(rows + 2, vector<short int>(cols + 2, 0));
     for (int i = 1; i < rows + 1; i++)
     {
@@ -22,7 +23,7 @@ vector<vector<short int>> black_and_white(const Mat frame)
     return bw_frame;
 }
 
-vector<vector<short int>> conv(const vector<vector<short int>> frame)
+vector<vector<short int>> conv(const vector<vector<short int>> & frame)
 {
     // note: frame is already zero padded.
     int rows = frame.size();
@@ -47,7 +48,7 @@ vector<vector<short int>> conv(const vector<vector<short int>> frame)
     return blurred_frame;
 }
 
-bool has_motion(const Mat frame, const vector<vector<short int>> background, const double k)
+bool has_motion(const Mat & frame, const vector<vector<short int>> & background, const double k)
 {
     int rows = frame.rows;
     int cols = frame.cols;
@@ -62,7 +63,7 @@ bool has_motion(const Mat frame, const vector<vector<short int>> background, con
     {
         for (int j = 0; j < cols; j++)
         {
-            if ((processed_frame[i][j] - background[i][j]) != 0)
+            if (processed_frame[i][j] != background[i][j])
             {
                 numberOfDifferentPixels++;
             }

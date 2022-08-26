@@ -97,7 +97,7 @@ int main(int argc, char **argv)
     vector<float> background_frame = black_and_white(frame);
     background_frame = conv(background_frame, rows, cols);
 
-    double k = 0.3; // motion is detected if the number of non-zero pixels (i.e. pixels that are not background) is greater than k% of the total number of pixels.
+    double k = 0.25; // motion is detected if the number of non-zero pixels (i.e. pixels that are not background) is greater than k% of the total number of pixels.
 
     // Get the number of frames in the video with opencv
     int numberOfFrames = cap.get(CAP_PROP_FRAME_COUNT);
@@ -160,5 +160,7 @@ int main(int argc, char **argv)
     cout << "Number of frames (minus background): " << numberOfFrames - 1 << endl;
     cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
     cout << "Total time in seconds: " << interarrival_time.count() / 1000000.0 << endl;
+
+    cap.release();
     return 0;
 }
