@@ -1,7 +1,0 @@
-/workspaces/parallel-motion-detection/CMakeFiles/FrameTa.dir
-/workspaces/parallel-motion-detection/CMakeFiles/BlackWhite.dir
-/workspaces/parallel-motion-detection/CMakeFiles/Conv.dir
-/workspaces/parallel-motion-detection/CMakeFiles/Benchmark.dir
-/workspaces/parallel-motion-detection/CMakeFiles/Main.dir
-/workspaces/parallel-motion-detection/CMakeFiles/edit_cache.dir
-/workspaces/parallel-motion-detection/CMakeFiles/rebuild_cache.dir
