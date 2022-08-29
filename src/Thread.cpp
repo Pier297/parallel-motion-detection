@@ -12,7 +12,7 @@
 using namespace std;
 using namespace cv;
 
-int runThread(string videoFilePath, double k, int numberOfThreads)
+int runThread(const string videoFilePath, const double k, const int numberOfThreads, const int kernel_size)
 {
     VideoCapture cap(videoFilePath);
     if (!cap.isOpened())
@@ -24,8 +24,8 @@ int runThread(string videoFilePath, double k, int numberOfThreads)
     // Process the background frame
     Mat frame;
     cap.read(frame);
-    vector<vector<short int>> background_frame = black_and_white(frame);
-    background_frame = conv(background_frame);
+    vector<vector<short int>> background_frame = grayscale(frame, kernel_size);
+    background_frame = blur(background_frame, kernel_size);
 
     atomic<int> numberOfFramesWithMotion(0);
 
@@ -43,7 +43,7 @@ int runThread(string videoFilePath, double k, int numberOfThreads)
                 numberOfFramesWithMotion += workerNumberOfFramesWithMotion;
                 break;
             }
-            if (has_motion(frame, background_frame, k))
+            if (has_motion(frame, background_frame, k, kernel_size))
             {
                 workerNumberOfFramesWithMotion++;
             }

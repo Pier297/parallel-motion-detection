@@ -6,17 +6,18 @@
 using namespace std;
 using namespace cv;
 
-vector<vector<short int>> black_and_white(const Mat & frame)
+vector<vector<short int>> grayscale(const Mat & frame, const int kernel_size)
 {
     int rows = frame.rows;
     int cols = frame.cols;
     // note: we already zero pad the frame so that in the conv we can omit the OOB checks
-    vector<vector<short int>> bw_frame(rows + 2, vector<short int>(cols + 2, 0));
-    for (int i = 1; i < rows + 1; i++)
+    int pad = floor(kernel_size / 2);
+    vector<vector<short int>> bw_frame(rows + pad*2, vector<short int>(cols + pad*2, 0));
+    for (int i = pad; i < rows + pad; i++)
     {
-        for (int j = 1; j < cols + 1; j++)
+        for (int j = pad; j < cols + pad; j++)
         {
-            Vec3b pixel = frame.at<Vec3b>(i - 1, j - 1);
+            Vec3b pixel = frame.at<Vec3b>(i - pad, j - pad);
             short int avg = (pixel[0] + pixel[1] + pixel[2]) / 3;
             bw_frame[i][j] = avg;
         }
@@ -24,38 +25,39 @@ vector<vector<short int>> black_and_white(const Mat & frame)
     return bw_frame;
 }
 
-vector<vector<short int>> conv(const vector<vector<short int>> & frame)
+vector<vector<short int>> blur(const vector<vector<short int>> & frame, const int kernel_size)
 {
     // note: frame is already zero padded.
     int rows = frame.size();
     int cols = frame[0].size();
-    vector<vector<short int>> blurred_frame(rows - 2, vector<short int>(cols - 2));
+    int pad = floor(kernel_size / 2);
+    vector<vector<short int>> blurred_frame(rows - 2*pad, vector<short int>(cols - 2*pad));
     // convolve the frame
-    for (int i = 1; i < rows - 1; i++)
+    for (int i = pad; i < rows - pad; i++)
     {
-        for (int j = 1; j < cols - 1; j++)
+        for (int j = pad; j < cols - pad; j++)
         {
             short int sum = 0;
-            for (int k = -1; k <= 1; k++)
+            for (int k = -pad; k <= pad; k++)
             {
-                for (int l = -1; l <= 1; l++)
+                for (int l = -pad; l <= pad; l++)
                 {
                     sum += frame[i + k][j + l];
                 }
             }
-            blurred_frame[i - 1][j - 1] = sum / 9;
+            blurred_frame[i - pad][j - pad] = sum / 9;
         }
     }
     return blurred_frame;
 }
 
-bool has_motion(const Mat & frame, const vector<vector<short int>> & background, const double k)
+bool has_motion(const Mat & frame, const vector<vector<short int>> & background, const double k, const int kernel_size)
 {
     int rows = frame.rows;
     int cols = frame.cols;
 
-    vector<vector<short int>> processed_frame = black_and_white(frame);
-    processed_frame = conv(processed_frame);
+    vector<vector<short int>> processed_frame = grayscale(frame, kernel_size);
+    processed_frame = blur(processed_frame, kernel_size);
 
     int numberOfDifferentPixels = 0;
 
