@@ -12,7 +12,7 @@
 using namespace std;
 using namespace cv;
 
-int runThread(const string videoFilePath, const double k, const int numberOfThreads)
+int runThread(const string videoFilePath, const double k, const int numberOfThreads, const bool pin_threads)
 {
     VideoCapture cap(videoFilePath);
     if (!cap.isOpened())
@@ -55,7 +55,11 @@ int runThread(const string videoFilePath, const double k, const int numberOfThre
     {
         threads[i] = thread(f);
         // use if-def to pin thread
-        
+        if (pin_threads) {
+            cpu_set_t cpuset;
+            CPU_ZERO(&cpuset);
+            CPU_SET(i, &cpuset);
+        }   
     }
 
     // Process the video frames

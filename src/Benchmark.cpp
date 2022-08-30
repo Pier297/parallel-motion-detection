@@ -101,7 +101,7 @@ int main(int argc, char **argv)
                 int computedRes;
                 {
                     utimer compute_time("Thread", &time);
-                    computedRes = runThread(video_paths[i], ks[i], j);
+                    computedRes = runThread(video_paths[i], ks[i], j, false);
                 }
                 if (computedRes != res[i])
                 {
