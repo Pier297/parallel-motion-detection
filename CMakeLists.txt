@@ -19,6 +19,11 @@ set_property(TARGET Blur PROPERTY CXX_STANDARD 20)
 target_compile_options( Blur PRIVATE -O3 -Wall )
 target_link_libraries( Blur ${OpenCV_LIBS} )
 
+add_executable( OptBlur experiments/OptBlur.cpp )
+set_property(TARGET OptBlur PROPERTY CXX_STANDARD 20)
+target_compile_options( OptBlur PRIVATE -O3 -Wall )
+target_link_libraries( OptBlur ${OpenCV_LIBS} )
+
 add_executable( Check experiments/Check.cpp )
 set_property(TARGET Check PROPERTY CXX_STANDARD 20)
 target_compile_options( Check PRIVATE -O3 -Wall )

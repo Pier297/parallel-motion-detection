@@ -6,12 +6,15 @@
 using namespace std;
 using namespace cv;
 
-vector<vector<short int>> grayscale(const Mat & frame, const int kernel_size)
+#define kernel_size 9
+#define pad 4
+// pad = floor(kernel_size / 2)
+
+vector<vector<short int>> grayscale(const Mat & frame)
 {
     int rows = frame.rows;
     int cols = frame.cols;
     // note: we already zero pad the frame so that in the conv we can omit the OOB checks
-    int pad = floor(kernel_size / 2);
     vector<vector<short int>> bw_frame(rows + pad*2, vector<short int>(cols + pad*2, 0));
     for (int i = pad; i < rows + pad; i++)
     {
@@ -25,12 +28,11 @@ vector<vector<short int>> grayscale(const Mat & frame, const int kernel_size)
     return bw_frame;
 }
 
-vector<vector<short int>> blur(const vector<vector<short int>> & frame, const int kernel_size)
+vector<vector<short int>> conv(const vector<vector<short int>> & frame)
 {
     // note: frame is already zero padded.
     int rows = frame.size();
     int cols = frame[0].size();
-    int pad = floor(kernel_size / 2);
     vector<vector<short int>> blurred_frame(rows - 2*pad, vector<short int>(cols - 2*pad));
     // convolve the frame
     for (int i = pad; i < rows - pad; i++)
@@ -51,13 +53,13 @@ vector<vector<short int>> blur(const vector<vector<short int>> & frame, const in
     return blurred_frame;
 }
 
-bool has_motion(const Mat & frame, const vector<vector<short int>> & background, const double k, const int kernel_size)
+bool has_motion(const Mat & frame, const vector<vector<short int>> & background, const double k)
 {
     int rows = frame.rows;
     int cols = frame.cols;
 
-    vector<vector<short int>> processed_frame = grayscale(frame, kernel_size);
-    processed_frame = blur(processed_frame, kernel_size);
+    vector<vector<short int>> processed_frame = grayscale(frame);
+    processed_frame = conv(processed_frame);
 
     int numberOfDifferentPixels = 0;
 

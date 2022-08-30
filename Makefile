@@ -176,6 +176,19 @@ Check/fast:
 .PHONY : Check/fast
 
 #=============================================================================
+# Target rules for targets named OptBlur
+
+# Build rule for target.
+OptBlur: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 OptBlur
+.PHONY : OptBlur
+
+# fast build rule for target.
+OptBlur/fast:
+	$(MAKE) -f CMakeFiles/OptBlur.dir/build.make CMakeFiles/OptBlur.dir/build
+.PHONY : OptBlur/fast
+
+#=============================================================================
 # Target rules for targets named Read
 
 # Build rule for target.
@@ -268,6 +281,33 @@ experiments/Grayscale.s: experiments/Grayscale.cpp.s
 experiments/Grayscale.cpp.s:
 	$(MAKE) -f CMakeFiles/Grayscale.dir/build.make CMakeFiles/Grayscale.dir/experiments/Grayscale.cpp.s
 .PHONY : experiments/Grayscale.cpp.s
+
+experiments/OptBlur.o: experiments/OptBlur.cpp.o
+
+.PHONY : experiments/OptBlur.o
+
+# target to build an object file
+experiments/OptBlur.cpp.o:
+	$(MAKE) -f CMakeFiles/OptBlur.dir/build.make CMakeFiles/OptBlur.dir/experiments/OptBlur.cpp.o
+.PHONY : experiments/OptBlur.cpp.o
+
+experiments/OptBlur.i: experiments/OptBlur.cpp.i
+
+.PHONY : experiments/OptBlur.i
+
+# target to preprocess a source file
+experiments/OptBlur.cpp.i:
+	$(MAKE) -f CMakeFiles/OptBlur.dir/build.make CMakeFiles/OptBlur.dir/experiments/OptBlur.cpp.i
+.PHONY : experiments/OptBlur.cpp.i
+
+experiments/OptBlur.s: experiments/OptBlur.cpp.s
+
+.PHONY : experiments/OptBlur.s
+
+# target to generate assembly for a file
+experiments/OptBlur.cpp.s:
+	$(MAKE) -f CMakeFiles/OptBlur.dir/build.make CMakeFiles/OptBlur.dir/experiments/OptBlur.cpp.s
+.PHONY : experiments/OptBlur.cpp.s
 
 experiments/Read.o: experiments/Read.cpp.o
 
@@ -363,6 +403,7 @@ help:
 	@echo "... Grayscale"
 	@echo "... Benchmark"
 	@echo "... Check"
+	@echo "... OptBlur"
 	@echo "... Read"
 	@echo "... experiments/Blur.o"
 	@echo "... experiments/Blur.i"
@@ -373,6 +414,9 @@ help:
 	@echo "... experiments/Grayscale.o"
 	@echo "... experiments/Grayscale.i"
 	@echo "... experiments/Grayscale.s"
+	@echo "... experiments/OptBlur.o"
+	@echo "... experiments/OptBlur.i"
+	@echo "... experiments/OptBlur.s"
 	@echo "... experiments/Read.o"
 	@echo "... experiments/Read.i"
 	@echo "... experiments/Read.s"
