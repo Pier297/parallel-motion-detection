@@ -56,7 +56,7 @@ int main(int argc, char **argv)
             int computedRes;
             {
                 utimer compute_time("Sequential", &time);
-                computedRes = runSequential(video_paths[i], ks[i], kernel_sizes[i]);
+                computedRes = runSequential(video_paths[i], ks[i]);
             }
             if (computedRes != res[i])
             {
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
                 int computedRes;
                 {
                     utimer compute_time("Thread", &time);
-                    computedRes = runThread(video_paths[i], ks[i], j, kernel_sizes[i]);
+                    computedRes = runThread(video_paths[i], ks[i], j);
                 }
                 if (computedRes != res[i])
                 {

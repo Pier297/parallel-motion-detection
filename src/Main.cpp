@@ -13,36 +13,34 @@ int main(int argc, char **argv)
     // Check if -s or -t or -f was passed
     if (argc < 2)
     {
-        cout << "Usage: " << argv[0] << " -s <video_path> <k> <kernel_size>" << endl;
-        cout << "Usage: " << argv[0] << " -t <video_path> <k> <num_threads> <kernel_size>" << endl;
-        cout << "Usage: " << argv[0] << " -f <video_path> <k> <num_threads> <kernel_size>" << endl;
+        cout << "Usage: " << argv[0] << " -s <video_path> <k>" << endl;
+        cout << "Usage: " << argv[0] << " -t <video_path> <k> <num_threads>" << endl;
+        cout << "Usage: " << argv[0] << " -f <video_path> <k> <num_threads>" << endl;
         return -1;
     }
     else if (argv[1] == string("-s"))
     {
-        if (argc != 5)
+        if (argc != 4)
         {
-            cout << "Usage: " << argv[0] << " -s <video_path> <k> <kernel_size>" << endl;
+            cout << "Usage: " << argv[0] << " -s <video_path> <k>" << endl;
             return -1;
         }
         string video_path = argv[2];
         double k = atof(argv[3]);
-        int kernel_size = atoi(argv[4]);
-        int numberOfFramesWithMotion = runSequential(video_path, k, kernel_size);
+        int numberOfFramesWithMotion = runSequential(video_path, k);
         cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
     }
     else if (argv[1] == string("-t"))
     {
-        if (argc != 6)
+        if (argc != 5)
         {
-            cout << "Usage: " << argv[0] << " -t <video_path> <k> <num_threads> <kernel_size>" << endl;
+            cout << "Usage: " << argv[0] << " -t <video_path> <k> <num_threads>" << endl;
             return -1;
         }
         string video_path = argv[2];
         double k = atof(argv[3]);
         int num_threads = atoi(argv[4]);
-        int kernel_size = atoi(argv[5]);
-        int numberOfFramesWithMotion = runThread(video_path, k, num_threads, kernel_size);
+        int numberOfFramesWithMotion = runThread(video_path, k, num_threads);
         cout << "Number of frames with motion: " << numberOfFramesWithMotion << endl;
     }
     // else if (argv[1] == string("-f"))

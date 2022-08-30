@@ -5,7 +5,7 @@
 using namespace std;
 using namespace cv;
 
-int runSequential(string videoFilePath, double k, const int kernel_size)
+int runSequential(string videoFilePath, double k)
 {
     VideoCapture cap(videoFilePath);
     if (!cap.isOpened())
@@ -17,15 +17,15 @@ int runSequential(string videoFilePath, double k, const int kernel_size)
     // Process the background frame
     Mat frame;
     cap.read(frame);
-    vector<vector<short int>> background_frame = grayscale(frame, kernel_size);
-    background_frame = blur(background_frame, kernel_size);
+    vector<vector<short int>> background_frame = grayscale(frame);
+    background_frame = conv(background_frame);
 
     // Process the video
     int numberOfFramesWithMotion = 0;
 
     while (cap.read(frame))
     {
-        if (has_motion(frame, background_frame, k, kernel_size))
+        if (has_motion(frame, background_frame, k))
         {
             numberOfFramesWithMotion++;
         }

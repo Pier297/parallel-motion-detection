@@ -7,12 +7,12 @@
 #include <chrono>
 #include <opencv2/opencv.hpp>
 #include <atomic>
-#include "Utils.cpp"
+#include "OptimizedUtils.cpp"
 
 using namespace std;
 using namespace cv;
 
-int runThread(const string videoFilePath, const double k, const int numberOfThreads, const int kernel_size)
+int runThread(const string videoFilePath, const double k, const int numberOfThreads)
 {
     VideoCapture cap(videoFilePath);
     if (!cap.isOpened())
@@ -24,8 +24,8 @@ int runThread(const string videoFilePath, const double k, const int numberOfThre
     // Process the background frame
     Mat frame;
     cap.read(frame);
-    vector<vector<short int>> background_frame = grayscale(frame, kernel_size);
-    background_frame = blur(background_frame, kernel_size);
+    vector<vector<short int>> background_frame = grayscale(frame);
+    background_frame = conv(background_frame);
 
     atomic<int> numberOfFramesWithMotion(0);
 
@@ -43,7 +43,7 @@ int runThread(const string videoFilePath, const double k, const int numberOfThre
                 numberOfFramesWithMotion += workerNumberOfFramesWithMotion;
                 break;
             }
-            if (has_motion(frame, background_frame, k, kernel_size))
+            if (has_motion(frame, background_frame, k))
             {
                 workerNumberOfFramesWithMotion++;
             }
@@ -54,6 +54,8 @@ int runThread(const string videoFilePath, const double k, const int numberOfThre
     for (int i = 0; i < numberOfThreads; i++)
     {
         threads[i] = thread(f);
+        // use if-def to pin thread
+        
     }
 
     // Process the video frames
