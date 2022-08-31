@@ -6,8 +6,8 @@
 using namespace std;
 using namespace cv;
 
-#define kernel_size 3
-#define pad 1
+#define kernel_size 9
+#define pad 4
 // pad = floor(kernel_size / 2)
 
 vector<vector<short int>> grayscale(const Mat & frame)
