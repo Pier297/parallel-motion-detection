@@ -1,44 +1,47 @@
 # Parallel Motion Detection
 
-## Introduction
+This is a simple motion detection algorithm that uses a parallel approach to count the number of frames that have motion in a video.
 
+For the dependencies, have a look at the 'Dockerfile'.
 
-## Parallel Strategies
+To Compile run
 
-Note: we don't have all the frames in memory at the beginning and so if we want each frame to be processed by a different thread, we need verify that the interarrival time is less than the time it takes to process a frame. Otherwise, there would be no benefit in using multiple threads.
+```bash
+$ cmake .
+$ make
+```
 
-Read takes [2792, 2798, 2782, 2817] microseconds, avg = 2797.25 microseconds
+## How to use
 
-Read + BW takes [3273, 3230, 3373, 3296] microseconds, avg = 3293 microseconds
+You can execute the Main by:
 
-Read + BW + Conv takes [8730, 8701, 8671, 8750] microseconds, avg = 8713 microseconds
+```bash
+$ bin/Main -t videos/small_video.mp4 0.3
+```
 
+For information see the file 'src/Main.cpp'
 
-Read takes [2792, 2798, 2782, 2817] microseconds, avg = 2797.25 microseconds
-BW takes [481, 432, 591, 479] microseconds, avg = 479.5 microseconds
-CONV takes [5437, 5408, 5378, 5457] microseconds, avg = 5420 microseconds
+## How to Benchmark
 
-On avg we spend 32% of the time in Read that is not parallizable, thus the max speedup is 1/0.32 = 3.2x.
+After compiling you can run the benchmark by:
 
-Remote machine:
+```bash
+$ ./benchmark.sh
+```
 
-Read: 5415
-Read + BW: 10474
-Read + BW + Conv: 31929
+## How to change the kernel size
 
+Due to efficiency we fix the kernel size before compiling. To change the kernel size you have to change the value of the macro 'kernel_size' and 'pad' in the file 'src/OptimizedUtils.cpp' and recompile the project.
 
-## Maximum Theoretical Speedup
+## Project Structure
 
-### Amdahl's Law
+The project is structured as follows:
 
-Max speedup can be computed by applying Amdahl's law.
+- src: Contains the source code
+- experiments: Contains the source code for the experiments (i.e. the timings of the different operations)
+- videos: Contains the videos used for the experiments
+- benchmark.sh: Script to run the benchmark
+- Dockerfile: Dockerfile to build the project
+- CMakeLists.txt: CMake file to build the project
 
-The serial fraction is given by the time spent reading the video.
-
-This is assuming strong scaling (the video stays the same as more cores are used).
-
-Note that weak scaling does not concern us since we parallelize the processing of frames and so the time spent per frame
-is constant regardless of the problem size.
-
-### Work-Span Model
-
+Note, in src/ we have Utils.cpp and OptimizedUtils.cpp, they differs on the way they compute the convolution. The first one uses a naive approach, while the second one uses a more optimized approach that exploits vectorization.
